@@ -45,20 +45,32 @@ Planwrit.com..."). **The correct pronunciation is "plan-rayt," as in "plan
 write."** "Planwrit" is an invented brand word, so the TTS engine guesses at
 it and isn't reliable given plain-text input alone.
 
-**Fix for the next regeneration:** spell the brand name phonetically in the
-spoken script wherever it's said aloud — e.g. `Plan-Write.com` instead of
-`Planwrit.com` — to force consistent correct pronunciation. Note the
-trade-off: this template burns captions directly from the spoken script
-text, so the on-screen caption would also read "Plan-Write.com" rather than
-the exact "Planwrit.com" spelling. Confirm with the client which they'd
-rather have:
-(a) guaranteed correct audio pronunciation with a hyphenated on-screen
-spelling, or
-(b) exact "Planwrit.com" on-screen spelling and accept the TTS engine may
-mispronounce it.
+**Client decision: option (b).** Keep the exact "Planwrit.com" spelling
+on-screen — do not hyphenate or otherwise alter the visible brand spelling.
+The AI voice must still say "plan-rayt" correctly.
 
-Apply this to every scene where "Planwrit" is spoken (Scene 3 and Scene 6 in
-the current script), not just the CTA.
+**Constraint:** the Blotato `ai-story-video` template exposes no
+phoneme/IPA/pronunciation-dictionary override — captions are burned in
+directly from the literal `script` text per scene, and audio pronunciation
+of an invented word is entirely up to the TTS engine's own guess. There is
+no dial in this tool to decouple "what's displayed" from "how it's said."
+Guaranteeing correct pronunciation while keeping the exact spelling is
+therefore not 100% controllable through this pipeline — it needs empirical
+testing, not a text trick.
+
+**Test plan for next regeneration (before spending credits on the full
+video):** run 2–3 cheap single-scene test clips of just the CTA line
+("Visit Planwrit.com and claim your free assessment today.") with different
+*formatting-only* variants that don't change the visible brand spelling —
+e.g. casing changes (`PLANWRIT.com`, `Planwrit.COM`), spacing
+(`Planwrit .com`), or punctuation around it — and listen for which one the
+voice (Sarah) reads as "plan-rayt." Lock in whichever phrasing works for
+both the corrected 16:9 CTA/Scene 3 lines and the pending 9:16
+regeneration. If no variant reliably produces the correct pronunciation,
+report that plainly rather than shipping an unverified guess.
+
+Apply the winning phrasing to every scene where "Planwrit" is spoken
+(Scene 3 and Scene 6 in the current script), not just the CTA.
 
 ## If you want the original manual-footage version instead
 
