@@ -37,6 +37,29 @@ original brief.
 - `assets/planwrit-quick-ad-version-a-16x9.mp4` — 1920×1080, for YouTube
 - `assets/planwrit-quick-ad-version-a-9x16.mp4` — 1080×1920, for Reels/TikTok/Shorts
 
+## ⚠ Known issue in the 16:9 render — pronunciation
+
+The AI voiceover said "Planwrit" inconsistently across scenes (correctly in
+some, mispronounced as "plan-writ" in the Scene 6 CTA line "Visit
+Planwrit.com..."). **The correct pronunciation is "plan-rayt," as in "plan
+write."** "Planwrit" is an invented brand word, so the TTS engine guesses at
+it and isn't reliable given plain-text input alone.
+
+**Fix for the next regeneration:** spell the brand name phonetically in the
+spoken script wherever it's said aloud — e.g. `Plan-Write.com` instead of
+`Planwrit.com` — to force consistent correct pronunciation. Note the
+trade-off: this template burns captions directly from the spoken script
+text, so the on-screen caption would also read "Plan-Write.com" rather than
+the exact "Planwrit.com" spelling. Confirm with the client which they'd
+rather have:
+(a) guaranteed correct audio pronunciation with a hyphenated on-screen
+spelling, or
+(b) exact "Planwrit.com" on-screen spelling and accept the TTS engine may
+mispronounce it.
+
+Apply this to every scene where "Planwrit" is spoken (Scene 3 and Scene 6 in
+the current script), not just the CTA.
+
 ## If you want the original manual-footage version instead
 
 `script.md` retains the full original brief (Pexels search terms, Canva/
