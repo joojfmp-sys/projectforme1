@@ -33,9 +33,10 @@ direction).
 true`) rather than static, to approximate the stock-footage motion in the
 original brief.
 
-**Exports:**
-- `assets/planwrit-quick-ad-version-a-16x9.mp4` — 1920×1080, for YouTube
-- `assets/planwrit-quick-ad-version-a-9x16.mp4` — 1080×1920, for Reels/TikTok/Shorts
+**Export:** hosted link only (see `video-links.md`) — the file itself isn't
+committed to this repo because `database.blotato.io` is blocked by this
+environment's network egress policy, so it can't be downloaded here. Access
+it from the Blotato platform or the direct link.
 
 ## ⚠ Known issue in the 16:9 render — pronunciation
 
@@ -71,6 +72,61 @@ report that plainly rather than shipping an unverified guess.
 
 Apply the winning phrasing to every scene where "Planwrit" is spoken
 (Scene 3 and Scene 6 in the current script), not just the CTA.
+
+## How the 9:16 render was produced (locally, no AI generation)
+
+The Blotato account ran out of credits after the 16:9 render, and two
+subsequent attempts at a 10-scene 9:16 job stalled/failed (see chat history
+— one hung for 20+ minutes at the script stage, the retry hit
+`insufficient-credits`). Rather than keep waiting on Blotato, this version
+was built from scratch locally: Python (Pillow for frame compositing,
+ffmpeg via `imageio-ffmpeg` for encoding) at `render_9x16.py`, no network
+calls at render time.
+
+**Why no AI voiceover this time:** it sidesteps the pronunciation problem
+entirely. This version is silent/text-only — captions carry the message,
+matching the "TEXT-ONLY VERSION" already described in `script.md`. No
+"Planwrit" mispronunciation risk since there's no TTS involved.
+
+**Assets used** (all real, not AI-generated):
+- 15 Pexels stock photos — client sourced these directly from Pexels and
+  uploaded them to Google Drive, one/two per search term from the original
+  table in `script.md`. Downloaded via the Google Drive MCP connector
+  (server-side fetch, not subject to this environment's blocked egress
+  list) and saved to `source-photos/pexels/`.
+- 2 personal Toronto landmark photos (CN Tower vertical shot, Front St W
+  office tower) — client-uploaded, saved to `source-photos/personal/`.
+- The real Planwrit logo (client-uploaded JPG on white background) —
+  background-keyed to transparent in code (`get_logo_rgba()` in
+  `render_9x16.py`) and composited into the brand-moment and CTA scenes.
+
+Client also supplied 10 more personal Toronto/Montreal photos not used in
+this cut (Chinatown street scenes, Mont Royal vista, Niagara-area
+landscape, Union Summer market, etc.) — kept in `source-photos/personal/`
+for a future cut/variant if wanted.
+
+**Scene → asset mapping:**
+
+| Scene | Asset | Photo |
+|---|---|---|
+| 1 — Hook | Pexels | hand signing a document (`pexels-sora-shimazaki-5668869.jpg`) |
+| 2 — Agitate | Pexels | man frustrated at laptop (`pexels-nicola-barts-7927347.jpg`) |
+| 3 — Solution/brand | Pexels → personal (crossfade) | confident businesswoman + skyline, then real CN Tower shot, with Planwrit logo overlaid |
+| 4 cut 1 — C11 Owner-Operator | Pexels | advisor reviewing paperwork with client |
+| 4 cut 2 — PNP Entrepreneur | Pexels | team reviewing a site/business plan |
+| 4 cut 3 — E2 Investor Visa | Pexels | two-handed handshake |
+| 4 cut 4 — Pitch Decks | Pexels | presenter with growth infographic |
+| 4 cut 5 — Canadian Grants | Personal | real Toronto office tower (Front St W) |
+| 5 — Trust signal | Pexels | businessman celebrating at laptop |
+| 6 — CTA | Solid brand green + logo | no photo — matches the original "clean brand card" spec |
+
+Each photo has a subtle Ken Burns zoom/pan, a brand-green (or warm-tinted)
+overlay for text legibility, and a vignette. Text/caption animation timing
+follows the same beats as `script.md`. Crossfades between scenes at ~0.35s.
+
+**To re-render:** `cd marketing/planwrit-quick-ad-version-a && python3
+render_9x16.py` (needs `pip install pillow imageio-ffmpeg numpy`). Output
+goes to `assets/planwrit-quick-ad-version-a-9x16.mp4`.
 
 ## If you want the original manual-footage version instead
 
